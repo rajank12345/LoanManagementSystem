@@ -1,19 +1,5 @@
 import React, { createContext, useContext, useReducer, useEffect, ReactNode } from 'react';
-import { 
-  createBorrower, 
-  getAllBorrowers, 
-  updateBorrower as updateBorrowerDB, 
-  deleteBorrower as deleteBorrowerDB,
-  createLoan,
-  getAllLoans,
-  updateLoan as updateLoanDB,
-  deleteLoan as deleteLoanDB,
-  createInstallment,
-  getAllInstallments,
-  deleteInstallment as deleteInstallmentDB,
-  getLoansWithBorrowers,
-  getInstallmentsWithDetails
-} from '../lib/db/operations';
+import * as api from '../lib/api';
 
 // Updated types to match database schema
 interface Borrower {
@@ -171,9 +157,9 @@ export function LoanProvider({ children }: { children: ReactNode }) {
       dispatch({ type: 'SET_ERROR', payload: null });
 
       const [borrowersData, loansData, installmentsData] = await Promise.all([
-        getAllBorrowers(),
-        getAllLoans(),
-        getAllInstallments()
+        api.getAllBorrowers(),
+        api.getAllLoans(),
+        api.getAllInstallments()
       ]);
 
       // Convert database types to application types
@@ -219,7 +205,7 @@ export function LoanProvider({ children }: { children: ReactNode }) {
 
   const addBorrower = async (borrowerData: Omit<Borrower, 'id' | 'createdAt' | 'updatedAt'>) => {
     try {
-      const borrower = await createBorrower(borrowerData);
+      const borrower = await api.createBorrower(borrowerData);
       const formattedBorrower = {
         ...borrower,
         createdAt: new Date(borrower.createdAt),
@@ -234,7 +220,7 @@ export function LoanProvider({ children }: { children: ReactNode }) {
 
   const updateBorrower = async (borrower: Borrower) => {
     try {
-      const updated = await updateBorrowerDB(borrower.id, borrower);
+      const updated = await api.updateBorrower(borrower.id, borrower);
       const formattedBorrower = {
         ...updated,
         createdAt: new Date(updated.createdAt),
@@ -249,7 +235,7 @@ export function LoanProvider({ children }: { children: ReactNode }) {
 
   const deleteBorrower = async (id: string) => {
     try {
-      await deleteBorrowerDB(id);
+      await api.deleteBorrower(id);
       dispatch({ type: 'DELETE_BORROWER', payload: id });
     } catch (error) {
       console.error('Error deleting borrower:', error);
@@ -259,7 +245,7 @@ export function LoanProvider({ children }: { children: ReactNode }) {
 
   const addLoan = async (loanData: Omit<Loan, 'id' | 'createdAt' | 'updatedAt'>) => {
     try {
-      const loan = await createLoan(loanData);
+      const loan = await api.createLoan(loanData);
       const formattedLoan = {
         ...loan,
         amount: parseFloat(loan.amount),
@@ -277,7 +263,7 @@ export function LoanProvider({ children }: { children: ReactNode }) {
 
   const updateLoan = async (loan: Loan) => {
     try {
-      const updated = await updateLoanDB(loan.id, loan);
+      const updated = await api.updateLoan(loan.id, loan);
       const formattedLoan = {
         ...updated,
         amount: parseFloat(updated.amount),
@@ -295,7 +281,7 @@ export function LoanProvider({ children }: { children: ReactNode }) {
 
   const deleteLoan = async (id: string) => {
     try {
-      await deleteLoanDB(id);
+      await api.deleteLoan(id);
       dispatch({ type: 'DELETE_LOAN', payload: id });
     } catch (error) {
       console.error('Error deleting loan:', error);
@@ -305,7 +291,7 @@ export function LoanProvider({ children }: { children: ReactNode }) {
 
   const addInstallment = async (installmentData: Omit<Installment, 'id' | 'createdAt'>) => {
     try {
-      const installment = await createInstallment(installmentData);
+      const installment = await api.createInstallment(installmentData);
       const formattedInstallment = {
         ...installment,
         amount: parseFloat(installment.amount),
@@ -321,7 +307,7 @@ export function LoanProvider({ children }: { children: ReactNode }) {
 
   const deleteInstallment = async (id: string) => {
     try {
-      await deleteInstallmentDB(id);
+      await api.deleteInstallment(id);
       dispatch({ type: 'DELETE_INSTALLMENT', payload: id });
     } catch (error) {
       console.error('Error deleting installment:', error);
