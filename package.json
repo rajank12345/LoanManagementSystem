@@ -1,8 +1,16 @@
 {
-  "name": "vite-react-typescript-starter",
+  "name": "loan-management-app",
+  "description": "A comprehensive loan management system built with React, TypeScript, and PostgreSQL",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/loan-management-app.git"
+  },
+  "keywords": ["loan-management", "react", "typescript", "postgresql", "drizzle"],
+  "author": "Your Name",
+  "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
