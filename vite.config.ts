@@ -7,14 +7,6 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [react()],
-    server: {
-      proxy: {
-        '/.netlify/functions': {
-          target: 'http://localhost:8888',
-          changeOrigin: true,
-        },
-      },
-    },
     envPrefix: ['VITE_', 'ADMIN_'],
     optimizeDeps: {
       exclude: ['lucide-react'],
