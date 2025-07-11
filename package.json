@@ -12,7 +12,7 @@
   "author": "Your Name",
   "license": "MIT",
   "scripts": {
-    "dev": "netlify dev",
+    "dev": "npx netlify dev",
     "dev:vite": "vite",
     "build": "vite build",
     "lint": "eslint .",
