@@ -8,11 +8,17 @@
     "type": "git",
     "url": "https://github.com/yourusername/loan-management-app.git"
   },
-  "keywords": ["loan-management", "react", "typescript", "postgresql", "drizzle"],
+  "keywords": [
+    "loan-management",
+    "react",
+    "typescript",
+    "postgresql",
+    "drizzle"
+  ],
   "author": "Your Name",
   "license": "MIT",
   "scripts": {
-    "dev": "npx netlify dev",
+    "dev": "vite",
     "dev:vite": "vite",
     "build": "vite build",
     "lint": "eslint .",
